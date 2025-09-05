@@ -47,7 +47,7 @@ struct PassportDetailsView : View {
             }
             VStack {
                 HStack {
-                    Text( passport.documentType)
+                    Text( passport.documentType + passport.documentSubType)
                     Text( passport.issuingAuthority)
                     Text( passport.documentNumber)
                     Spacer()

@@ -23,7 +23,7 @@ public enum PassportAuthenticationStatus {
 @available(iOS 13, macOS 10.15, *)
 public class NFCPassportModel {
     
-    public private(set) lazy var documentType : String = { return String( passportDataElements?["5F03"]?.first ?? "?" ) }()
+    public private(set) lazy var documentType : String = { return String( passportDataElements?["5F03"]?.first ?? "?" ).replacingOccurrences(of: "<", with: "" ) }()
     public private(set) lazy var documentSubType : String = { return String( passportDataElements?["5F03"]?.last ?? "?" ) }()
     public private(set) lazy var documentNumber : String = { return (passportDataElements?["5A"] ?? "?").replacingOccurrences(of: "<", with: "" ) }()
     public private(set) lazy var issuingAuthority : String = { return passportDataElements?["5F28"] ?? "?" }()
