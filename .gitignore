@@ -101,3 +101,4 @@ iOSInjectionProject/
 # Workspace configuration
 Examples/Example_SPM/NFCPassportReaderApp.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
 Examples/Example_SPM/NFCPassportReaderApp.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+Examples/.DS_Store
