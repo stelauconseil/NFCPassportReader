@@ -635,7 +635,7 @@
 		};
 		A183989A26848C7600DC98C1 /* XCRemoteSwiftPackageReference "NFCPassportReader" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AndyQ/NFCPassportReader";
+			repositoryURL = ../../../NFCPassportReader;
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
