@@ -52,18 +52,6 @@ struct MainView : View {
                     .pickerStyle(SegmentedPickerStyle())
                     .padding(.horizontal)
                     .padding(.top)
-                    
-                    // PACE-only polling toggle
-                    Toggle(isOn: $paceOnly) {
-                        VStack(alignment: .leading) {
-                            Text("PACE only")
-                            Text("Use Core NFC PACE polling (requires PACE support on document)")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                        }
-                    }
-                    .padding(.horizontal)
-                    .padding(.bottom, 4)
 
                     // Show appropriate UI based on selection
                     if selectedPasswordType == .mrz {
@@ -99,6 +87,18 @@ struct MainView : View {
                                 .padding(.horizontal)
                         }
                     }
+                    
+                    // PACE-only polling toggle
+                    Toggle(isOn: $paceOnly) {
+                        VStack(alignment: .leading) {
+                            Text("PACE only")
+                            Text("Use Core NFC PACE polling\n(requires PACE support on document)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                    .padding(.horizontal)
+                    .padding(.bottom, 4)
                     
                     Button(action: {
                         self.scanPassport()
