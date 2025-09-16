@@ -31,6 +31,8 @@ struct MainView : View {
     @State private var gettingLogs : Bool = false
     @State private var selectedPasswordType: PACEPasswordType = .mrz
     @State private var canNumber = ""
+    // New: control PACE-only polling UI toggle
+    @State private var paceOnly: Bool = false
 
     @State var page = 0
     
@@ -51,6 +53,18 @@ struct MainView : View {
                     .padding(.horizontal)
                     .padding(.top)
                     
+                    // PACE-only polling toggle
+                    Toggle(isOn: $paceOnly) {
+                        VStack(alignment: .leading) {
+                            Text("PACE only")
+                            Text("Use Core NFC PACE polling (requires PACE support on document)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                    .padding(.horizontal)
+                    .padding(.bottom, 4)
+
                     // Show appropriate UI based on selection
                     if selectedPasswordType == .mrz {
                         HStack {
@@ -276,6 +290,7 @@ extension MainView {
                         passport = try await passportReader.readPassport(
                             mrzKey: mrzKeyParam,
                             useExtendedMode: settings.useExtendedMode,
+                            paceOnly: paceOnly,
                             customDisplayMessage: customMessageHandler
                         )
                     } else {
@@ -284,6 +299,7 @@ extension MainView {
                             mrzKey: nil,
                             can: canParam,
                             useExtendedMode: settings.useExtendedMode,
+                            paceOnly: paceOnly,
                             customDisplayMessage: customMessageHandler
                         )
                     }
