@@ -10,9 +10,9 @@ import Foundation
 
 /// Some Utility methods for string -  access characters by index
 extension String {
-    subscript(_ i: Int) -> String {
-        let idx1 = index(startIndex, offsetBy: i)
-        let idx2 = index(idx1, offsetBy: 1)
+    subscript(_ index: Int) -> String {
+        let idx1 = self.index(startIndex, offsetBy: index)
+        let idx2 = self.index(idx1, offsetBy: 1)
         return String(self[idx1..<idx2])
     }
     

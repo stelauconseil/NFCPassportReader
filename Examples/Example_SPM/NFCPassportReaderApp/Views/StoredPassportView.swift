@@ -17,8 +17,6 @@ struct StoredPassportView: View {
     
     var body: some View {
         ZStack {
-            NavigationLink( destination: PassportView(), isActive: $showDetails) { Text("") }
-            
             VStack {
                 List {
                     ForEach(self.storedPassports, id: \.self) { item in
@@ -77,6 +75,10 @@ struct StoredPassportView: View {
         }
         .onAppear() {
             loadStoredPassports()
+        }
+        // Modern navigation destination driven by Bool binding
+        .navigationDestination(isPresented: $showDetails) {
+            PassportView()
         }
     }
 }
@@ -143,7 +145,9 @@ struct StoredPassportView_Previews: PreviewProvider {
     static var previews: some View {
         let settings = SettingsStore()
         
-        StoredPassportView()
-            .environmentObject(settings)
+        NavigationStack {
+            StoredPassportView()
+                .environmentObject(settings)
+        }
     }
 }

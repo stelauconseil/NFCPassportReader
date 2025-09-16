@@ -1,4 +1,3 @@
-
 //
 //  PassportView.swift
 //  NFCPassportReaderApp
@@ -16,8 +15,7 @@ struct PassportView : View {
     
     var body: some View {
         VStack {
-            NavigationLink( destination: ExportPassportView(), isActive: $showExportPassport) { Text("") }
-
+            // Removed deprecated hidden NavigationLink
             PassportSummaryView(passport:settings.passport!)
             HStack {
 
@@ -35,6 +33,10 @@ struct PassportView : View {
         }
         .navigationTitle("Passport Details")
         .navigationBarTitleDisplayMode(.inline)
+        // Modern navigation destination driven by Bool binding
+        .navigationDestination(isPresented: $showExportPassport) {
+            ExportPassportView()
+        }
     }
 }
 
@@ -61,7 +63,7 @@ struct PassportView_Previews : PreviewProvider {
         let settings = SettingsStore()
         settings.passport = passport
         
-        return NavigationView {
+        return NavigationStack {
             PassportView()
                 .environmentObject(settings)
                 .environment( \.colorScheme, .light)

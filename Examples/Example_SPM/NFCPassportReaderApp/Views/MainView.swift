@@ -39,21 +39,8 @@ struct MainView : View {
     private let passportReader = PassportReader()
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
-                NavigationLink( destination: SettingsView(), isActive: $showSettings) { Text("") }
-                NavigationLink( destination: PassportView(), isActive: $showDetails) { Text("") }
-                NavigationLink( destination: StoredPassportView(), isActive: $showSavedPassports) { Text("") }
-                NavigationLink( destination: MRZScanner(completionHandler: { mrz in
-                    
-                    if let (docNr, dob, doe) = parse( mrz:mrz ) {
-                        settings.passportNumber = docNr
-                        settings.dateOfBirth = dob
-                        settings.dateOfExpiry = doe
-                    }
-                    showScanMRZ = false
-                }).navigationTitle("Scan MRZ"), isActive: $showScanMRZ){ Text("") }
-
                 VStack {
                     // Authentication Method Picker
                     Picker("Authentication Method", selection: $selectedPasswordType) {
@@ -143,7 +130,7 @@ struct MainView : View {
                     }
                 }
             }
-            .navigationBarTitle("Passport details", displayMode: .automatic)
+            .navigationTitle("Passport details")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Menu {
@@ -164,6 +151,27 @@ struct MainView : View {
                         Text(alertMessage), dismissButton: .default(Text("Got it!")))
             }
             .background(colorScheme == .dark ? Color.black : Color.white)
+            // Modern navigation destinations driven by Bool bindings
+            .navigationDestination(isPresented: $showSettings) {
+                SettingsView()
+            }
+            .navigationDestination(isPresented: $showDetails) {
+                PassportView()
+            }
+            .navigationDestination(isPresented: $showSavedPassports) {
+                StoredPassportView()
+            }
+            .navigationDestination(isPresented: $showScanMRZ) {
+                MRZScanner(completionHandler: { mrz in
+                    if let (docNr, dob, doe) = parse( mrz:mrz ) {
+                        settings.passportNumber = docNr
+                        settings.dateOfBirth = dob
+                        settings.dateOfExpiry = doe
+                    }
+                    showScanMRZ = false
+                })
+                .navigationTitle("Scan MRZ")
+            }
         }
     }
 }
@@ -328,6 +336,3 @@ struct ContentView_Previews : PreviewProvider {
     }
 }
 #endif
-
-
-

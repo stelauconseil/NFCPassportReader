@@ -46,9 +46,6 @@ struct MRZEntryView : View {
             settings.passportNumber = $0.uppercased()
         })
         VStack {
-            NavigationLink( destination: DateView(date:$settings.dateOfBirth, title:editDateTitle), isActive: $editDOB) { Text("") }
-            NavigationLink( destination: DateView(date:$settings.dateOfExpiry, title:editDateTitle), isActive: $editDOE) { Text("") }
-
             TextField("Passport number", text: passportNrBinding)
                 .textCase(.uppercase)
                 .modifier(ClearButton(text: passportNrBinding))
@@ -90,6 +87,13 @@ struct MRZEntryView : View {
             Divider()
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
+        // Modern navigation destinations driven by Bool bindings
+        .navigationDestination(isPresented: $editDOB) {
+            DateView(date: $settings.dateOfBirth, title: editDateTitle)
+        }
+        .navigationDestination(isPresented: $editDOE) {
+            DateView(date: $settings.dateOfExpiry, title: editDateTitle)
+        }
     }
 }
 
@@ -113,7 +117,7 @@ struct MRZEntryView_Previews : PreviewProvider {
         
         return
             Group {
-                NavigationView {
+                NavigationStack {
                     MRZEntryView()
                 }
                 .environmentObject(settings)
@@ -122,4 +126,3 @@ struct MRZEntryView_Previews : PreviewProvider {
     }
 }
 #endif
-
